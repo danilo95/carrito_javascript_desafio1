@@ -122,6 +122,62 @@ class Inventory {
         stock: 30,
         imageUrl: './img/pasta.jpg',
       },
+      {
+        id: 'p13',
+        name: 'Pan integral',
+        price: 5.8,
+        stock: 10,
+        imageUrl: './img/pan.jpg',
+      },
+      {
+        id: 'p14',
+        name: 'Piña',
+        price: 3.5,
+        stock: 12,
+        imageUrl: './img/piña.jpg',
+      },
+      {
+        id: 'p15',
+        name: 'Zanahoria lb',
+        price: 0.9,
+        stock: 30,
+        imageUrl: './img/zanahoria.jpg',
+      },
+      {
+        id: 'p16',
+        name: 'Arroz',
+        price: 0.75,
+        stock: 35,
+        imageUrl: './img/arroz.jpg',
+      },
+      {
+        id: 'p17',
+        name: 'Yogurt griego',
+        price: 1.0,
+        stock: 6,
+        imageUrl: './img/yogurt.jpg',
+      },
+      {
+        id: 'p18',
+        name: 'Cartón de huevos',
+        price: 5.0,
+        stock: 20,
+        imageUrl: './img/huevos.jpg',
+      },
+      {
+        id: 'p19',
+        name: 'Alimento para perros',
+        price: 43.0,
+        stock: 16,
+        imageUrl: './img/perros.jpg',
+      },
+      {
+        id: 'p20',
+        name: 'Arándanos congelados',
+        price: 5.6,
+        stock: 9,
+        imageUrl: './img/arandanos.jpg',
+      },
     ].map((p) => new Product(p));
     this.products = seeded;
     this.save();
