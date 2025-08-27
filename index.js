@@ -316,6 +316,9 @@ class StoreApp {
     this.inventory = new Inventory();
     this.inventory.seedIfEmpty();
     this.cart = new Cart(this.inventory).load();
+    this.downloadInvoiceBtn = document.getElementById('downloadInvoiceBtn');
+    this.downloadInvoiceBtn.addEventListener('click', () => this.downloadInvoicePDF());
+
 
     // referencias de elementos del DOM
     this.grid = document.getElementById('productsGrid');
@@ -355,6 +358,48 @@ class StoreApp {
     this.renderProducts();
     this.renderCart();
   }
+
+  downloadInvoicePDF() {
+  if (!this.lastInvoice) return;
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // Encabezado
+  doc.setFontSize(16);
+  doc.text("Factura de compra - Gualmart", 20, 20);
+  doc.setFontSize(10);
+  doc.text(`Fecha: ${this.lastInvoice.date}`, 20, 28);
+
+  // Tabla de productos
+  let y = 40;
+  doc.setFontSize(12);
+  doc.text("Producto", 20, y);
+  doc.text("Cant.", 90, y);
+  doc.text("P.Unit", 120, y);
+  doc.text("Subtotal", 160, y);
+
+  y += 8;
+  this.lastInvoice.items.forEach(item => {
+    doc.text(item.name, 20, y);
+    doc.text(String(item.qty), 95, y, { align: "right" });
+    doc.text(fmt.format(item.price), 125, y, { align: "right" });
+    doc.text(fmt.format(item.subtotal), 180, y, { align: "right" });
+    y += 8;
+  });
+
+  // Totales
+  y += 5;
+  doc.setFontSize(12);
+  doc.text(`Subtotal: ${fmt.format(this.lastInvoice.subtotal)}`, 140, y);
+  y += 8;
+  doc.text(`IVA (13%): ${fmt.format(this.lastInvoice.tax)}`, 140, y);
+  y += 8;
+  doc.text(`Total: ${fmt.format(this.lastInvoice.total)}`, 140, y);
+
+  // Guardar
+  doc.save("factura.pdf");
+}
 
   get filteredProducts() {
     return this.inventory.search(this.searchInput.value || '');
@@ -503,14 +548,8 @@ class StoreApp {
   }
 
   onCheckout() {
-    if (this.cart.items.length === 0) {
-      this.toast('El carrito está vacío.');
-      return;
-    }
-    this.cart.checkout();
-    this.refreshUI();
-    this.toast('¡Compra realizada! Gracias.');
-  }
+  
+}
 
   toast(message) {
     // modal de error
