@@ -548,6 +548,55 @@ class StoreApp {
   }
 
   onCheckout() {
+     if (this.cart.items.length === 0) {
+    this.toast('El carrito está vacío.');
+    return;
+  }
+
+  // Generar factura antes de vaciar el carrito
+  const invoiceBody = document.getElementById('invoiceBody');
+  const invoiceSubtotal = document.getElementById('invoiceSubtotal');
+  const invoiceTax = document.getElementById('invoiceTax');
+  const invoiceTotal = document.getElementById('invoiceTotal');
+
+  invoiceBody.innerHTML = '';
+  let subtotal = 0;
+
+  for (const item of this.cart.items) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${item.name}</td>
+      <td>${item.qty}</td>
+      <td>${fmt.format(item.price)}</td>
+      <td>${fmt.format(item.subtotal)}</td>
+    `;
+    invoiceBody.appendChild(tr);
+    subtotal += item.subtotal;
+  }
+
+  const tax = subtotal * 0.13; // IVA 13%
+  const total = subtotal + tax;
+
+  invoiceSubtotal.textContent = fmt.format(subtotal);
+  invoiceTax.textContent = fmt.format(tax);
+  invoiceTotal.textContent = fmt.format(total);
+
+  // Guardamos la última factura para PDF
+  this.lastInvoice = {
+    items: [...this.cart.items],
+    subtotal,
+    tax,
+    total,
+    date: new Date().toLocaleString("es-SV")
+  };
+
+  // Vaciar carrito (pero ya tenemos los datos en la factura)
+  this.cart.checkout();
+  this.refreshUI();
+
+  // Mostrar modal de factura
+  const invoiceModal = new bootstrap.Modal(document.getElementById('invoiceModal'));
+  invoiceModal.show();
   
 }
 
