@@ -178,6 +178,76 @@ class Inventory {
         stock: 9,
         imageUrl: './img/arandanos.jpg',
       },
+      {
+        id: 'p21',
+        name: 'Leche entera 1L',
+        price: 1.25,
+        stock: 25,
+        imageUrl: './img/leche_entera.jpg',
+      },
+      {
+        id: 'p22',
+        name: 'Queso mozzarella 200g',
+        price: 2.8,
+        stock: 18,
+        imageUrl: './img/queso.jpg',
+      },
+      {
+        id: 'p23',
+        name: 'Jamón de pavo 250g',
+        price: 3.5,
+        stock: 12,
+        imageUrl: './img/jamon.jpg',
+      },
+      {
+        id: 'p24',
+        name: 'Coca-Cola 2L',
+        price: 2.3,
+        stock: 40,
+        imageUrl: './img/cocacola.jpg',
+      },
+      {
+        id: 'p25',
+        name: 'Agua purificada 5L',
+        price: 1.9,
+        stock: 30,
+        imageUrl: './img/agua.jpg',
+      },
+      {
+        id: 'p26',
+        name: 'Detergente en polvo 1kg',
+        price: 4.7,
+        stock: 15,
+        imageUrl: './img/detergente.jpg',
+      },
+      {
+        id: 'p27',
+        name: 'Jabón de tocador (pack 3)',
+        price: 2.6,
+        stock: 20,
+        imageUrl: './img/jabon.jpg',
+      },
+      {
+        id: 'p28',
+        name: 'Shampoo familiar 750ml',
+        price: 5.2,
+        stock: 10,
+        imageUrl: './img/shampoo.jpg',
+      },
+      {
+        id: 'p29',
+        name: 'Manzanas rojas libra',
+        price: 1.5,
+        stock: 25,
+        imageUrl: './img/manzana.jpg',
+      },
+      {
+        id: 'p30',
+        name: 'Tomates frescos libra',
+        price: 1.2,
+        stock: 28,
+        imageUrl: './img/tomates.jpg',
+      },
     ].map((p) => new Product(p));
     this.products = seeded;
     this.save();
@@ -192,7 +262,7 @@ class Inventory {
     const t = term.trim().toLowerCase();
     if (!t) return this.getAll();
     return this.products.filter((product) =>
-      prodcut.name.toLowerCase().includes(t)
+      product.name.toLowerCase().includes(t)
     );
   }
   decrease(id, qty) {
